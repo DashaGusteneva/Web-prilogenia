@@ -1065,7 +1065,7 @@
                             <li class="span4">
                                 <div class="thumbnail" align="center">
                                     <h3>Сохинова Виктория</h3>
-                                    <img src="http://placehold.it/300x200" alt="" style="opacity:0.8;filter:alpha(opacity=80)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.9;this.filters.alpha.opacity=90">
+                                    <img src="/img/_vs.jpg" alt="" style="opacity:0.8;filter:alpha(opacity=80)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.9;this.filters.alpha.opacity=90">
                                         <div class="caption">
                                             <a href="https://github.com/Vika-Sokhinova/Web-pril" target="_blank" class="btn btn-info btn-large"><i class="icon-fire"></i> Репозиторий на GitHub</a>
                                         </div>
