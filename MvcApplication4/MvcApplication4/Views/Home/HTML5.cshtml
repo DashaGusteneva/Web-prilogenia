@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "HTML5";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML 5</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/HTML5.css" />
+    <script>
+        function showPosition() {
+            var x = document.getElementById("geo");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    x.innerHTML = "Latitude:" + p.coords.latitude + "<br>Longitude:" + p.coords.longitude;
+                }, function (err) { alter(err.message); });
+            } else { x.innerHTML = "Geolocation is not supported by browser"; }
+        }
+    </script>
+</head>
+<body>
+    <header>
+
+        <span id="geo"></span>
+    </header>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Главная", "Index", "Home")</li>
+            <li>@Html.ActionLink("Форум", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Новости", "Contact", "Home")</li>
+        </ul>
+    </div>
+    <section>
+        <header>
+            <h1>Форсаж 7</h1>
+            <img src="~/Images/fors.jpg" />
+            <aside>
+                
+                <font color="red"><ins>Режиссёр:</ins></font>   <br/>	<font color="blue">Джеймс Ван</font> <br/>
+                
+                <font color="red"><ins>В ролях:</ins></font> <br/>	<font color="blue"> Вин Дизель<br /> Пол Уокер<br /> Дуэйн Джонсон<br /> Джейсон Стэтем<br /> Мишель Родригес<br /> Джордана Брюстер<br /> Тайриз Гибсон<br /> Лудакрис<br /> Эльза Патаки<br /> Лукас Блэк<br /> </font>
+                
+            </aside>
+        </header>
+       
+        <article>Они покорили Токио и Рио, Лос-Анджелес и Лондон. Но мир больше не играет по их правилам. Зной арабских пустнынь, неприлично высокие небоскрёбы, миллионы долларов на колёсах и очень, очень знаменитый злодей. Скорость не знает границ.  </article>
+      
+        <aside>
+            Эта новость опубликована <time datetime="2015-04-20">
+                20 апреля 2015
+            </time>
+            <input type="button" value="Click me" onclick="showPosition()" />
+        </aside>
+    </section>  
+</body>
+</html>
