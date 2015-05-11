@@ -1,0 +1,212 @@
+<script type="text/javascript" src="1"></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<script> 
+			var canvas, ctx;
+			var shoot = [];
+			var num_shoot = 1000;
+			var num_stars = 100;
+			var timer = 0;
+			var cvWidth = 1000;
+
+		Shoot.prototype.update = function(){
+			this.x += this.xs;
+			this.y += this.ys;
+			this.ys += 0.1;
+			
+			if ((this.h == 2) && (this.ys > 0)){
+				this.livetime = -1;
+			}
+			else{
+				this.livetime -= 2;
+			}
+			if (this.y > canvas.heigth) this.livetime = -1;
+		}
+
+		function Shoot(X,Y,XS,YS,hie){
+			this.x = X;
+			this.y = Y;
+
+			this.xs = XS;
+			this.ys = YS;
+			this.h = hie;  
+			this.style = updateColor();
+			this.livetime = 200 + Math.random()*150;
+		}
+		function zalp(){
+					for (var i = 0; i < num_shoot; i++){
+						if (shoot[i].livetime < 0){						
+							shoot[i] = new Shoot(Math.random()*(canvas.width-2*canvas.width/5) 								+canvas.width/5,canvas.height,
+							Math.random() * 7 - 2,- Math.random() * 5 - 4,1);
+						}
+					}
+				
+		}
+		function zont(id,nums){
+			var free_nums = 0;
+			if (nums == -1){
+				nums = 1;
+				for (var i = 0;i < num_shoot;i++){
+					if (shoot[i].livetime < 0){ 
+						free_nums++;}
+					else
+						{if (shoot[i].h == 2) nums++;}
+				}	
+				nums = free_nums/nums;		
+			}
+			
+			for (var i = 0,n = 0;(i < num_shoot)&&(n < nums);i++){
+				if (shoot[i].livetime < 0){
+				n++;
+				var speed = Math.random() * 4;
+				var fi = - Math.random()* 3.14;
+				var x = speed * Math.cos(fi) - shoot[id].xs;
+				var y = speed * Math.sin(fi) - Math.random()*4;
+				shoot[i] = new Shoot(shoot[id].x,shoot[id].y,x,y,1);
+				}
+				
+			}
+
+		}
+		function puh(num){
+			var n = 0;
+			for (var i = 0;(i < num_shoot) && (n < num);i++){	
+				if (shoot[i].livetime < 0){
+					shoot[i] = new Shoot(Math.random()*(canvas.width-2*canvas.width/5) + canvas.width/5,
+					canvas.height,Math.random() * 4 - 2,(- Math.random()*2 - 7)*(canvas.height/600),2);
+					n++;
+				}
+			}
+		}
+	
+		function loop(){
+			timer++;
+			if (timer == 80){
+				puh(Math.random()*10);
+				timer = 0;
+			};
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		for (var i = 0; i <num_shoot; i++){
+			shoot[i].update();
+			if (shoot[i].livetime > 0){
+				ctx.strokeStyle = shoot[i].style;
+				ctx.beginPath();
+				ctx.moveTo(shoot[i].x, shoot[i].y);
+				ctx.lineTo(shoot[i].x - shoot[i].xs,shoot[i].y - shoot[i].ys);
+				ctx.stroke();
+				ctx.closePath();
+			}
+			else{
+				if (shoot[i].h == 2 ){
+					zont(i,-1);
+					shoot[i].h = 1;
+				}
+			}
+		}
+	}
+	
+
+
+		
+
+		function load() {
+		
+			canvas = document.getElementById("bk");
+			canvas.width = innerWidth - 24;
+			canvas.height = innerHeight - 24;
+			ctx = canvas.getContext("2d");
+			ctx.lineWidth = "1";
+			
+			for (i = 0; i < num_stars; i++){
+				
+				ctx.strokeStyle = updateColor();
+				x = Math.random()*canvas.width;
+				y = Math.random()*canvas.height;
+					ctx.beginPath();
+					ctx.moveTo(x, y);
+					ctx.lineTo(x + 1, y + 1);
+					ctx.lineTo(x + 1, y - 1);
+					ctx.lineTo(x-1, y + 1);
+					ctx.stroke();
+					ctx.closePath();
+			}
+			
+			
+			canvas = document.getElementById("cv");
+			
+			canvas.width = innerWidth - 24;
+			canvas.height = innerHeight - 6;
+			ctx = canvas.getContext("2d");
+			num_shoot = canvas.width;
+			
+			for (var i = 0; i < num_shoot; i++){
+					shoot[i] = new Shoot(Math.random() * (canvas.width-2*canvas.width/5)+canvas.width/5,
+						canvas.height,Math.random() * 4 - 2,- Math.random() * 5 - 4,1);
+			}
+				
+			ctx.lineWidth = "2";
+			
+			timer = window.setInterval('loop();', 50);
+		}
+		
+	function updateColor(){
+			var c = "rgb(";
+			for (var n = 1; n < 4;n++){
+			if (Math.round(Math.random())){
+				c += "255";
+			}
+			else{
+				c += "150";
+			}
+				if (n == 3){
+					c += ")";
+				}
+				else{
+					c +=",";
+				}
+			}
+			return c;
+		}
+	</script>	
+<link rel="stylesheet" media="screen" href="works.css">
+</head>
+<style>
+@font-face {
+    font-family: Pompadur; /* Гарнитура шрифта */
+    src: url(fonts/pompadur.ttf); /* Путь к файлу со шрифтом */
+   }
+   h1 {
+    font-family: Pompadur, 'Comic Sans MS', cursive;
+   }
+ body {
+ background-image: url('екб.jpg');
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ -ms-background-size: cover;
+ background-size: cover;
+}
+</style>
+
+
+
+<body onload="load()">
+	
+	<canvas id="cv" width="1000" height="550"> </canvas>
+	<canvas id="bk" width="1000" height="550"> </canvas>
+
+
+</body>
+ <div id="wrapper">
+ <div id="container">
+ <h2 id="blink5">9 Мая <br>С Днём Победы!</br></h2>
+</div>
+</div>
+</html>  
+
